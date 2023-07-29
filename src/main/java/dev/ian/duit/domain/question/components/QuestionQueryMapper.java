@@ -20,24 +20,35 @@ public interface QuestionQueryMapper {
 
 
   @Select("""
-      select m.id, t.topic, m.question
-      from mcq m
-      join topic t on t.id = m.topic_id
-      where t.topic = #{topic}
+    select 
+        m.id          as id,
+        t.topic       as topic,
+        m.question    as question,
+        c.id          as c_id,
+        c.choice      as c_choice,
+        c.explanation as c_explanation,
+        c.is_correct  as c_is_correct
+    from mcq m
+        join topic t on t.id = m.topic_id
+        join mcq_choices c on c.mcq_id = m.id
+    where t.topic = #{topic}
   """)
-  @Results(id="mcqMap", value={
-    @Result(javaType=Long.class, column="id", property="id", id=true),
-    @Result(javaType=String.class, column="topic", property="topic"),
-    @Result(javaType=String.class, column="question", property="question"),
-    @Result(many=@Many(select="findMcqChoices"), javaType=Set.class, property="choices", column="id")
-  })
+  @ResultMap("mcqMap")
   List<Mcq> findAllMcqByTopic(String topic);
 
 
   @Select("""
-      select m.id, t.topic, m.question
-      from mcq m
-      join topic t on t.id = m.topic_id
+    select 
+        m.id          as id,
+        t.topic       as topic,
+        m.question    as question,
+        c.id          as c_id,
+        c.choice      as c_choice,
+        c.explanation as c_explanation,
+        c.is_correct  as c_is_correct
+    from mcq m
+        join topic t on t.id = m.topic_id
+        join mcq_choices c on c.mcq_id = m.id
   """)
   @ResultMap("mcqMap")
   List<Mcq> findAllMcq();
@@ -54,18 +65,5 @@ public interface QuestionQueryMapper {
   @ResultMap("mcqMap")
   @MapKey("topic")
   Map<String, List<Mcq>> getMcqToTopic();
-
-
-  @Select("""
-      select mc.id, mc.choice, mc.explanation, mc.is_correct
-      from mcq_choices mc
-      where mc.mcq_id = #{mcqId}
-  """)
-  @Results(id="choiceMap", value={
-    @Result(javaType=Long.class, column="id", property="id", id=true),
-    @Result(javaType=String.class, column="choice", property="choice"),
-    @Result(javaType=String.class, column="explanation", property="explanation"),
-    @Result(javaType=String.class, column="is_correct", property="isCorrect")
-  })
-  Set<McqChoice> findMcqChoices(Long mcqId);
+  
 }

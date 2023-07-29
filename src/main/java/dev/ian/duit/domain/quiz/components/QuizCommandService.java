@@ -21,7 +21,7 @@ public class QuizCommandService {
     if (rowsInserted == 0) throw new RuntimeException("No Quiz Created");
 
     // create quiz item result
-    quiz.getResults().forEach(i -> {
+    quizCommand.getResults().forEach(i -> {
       log.info("1 - " + quiz.getId());
       log.info("2 - " + i.getMcqId());
       log.info("3 - " + i.getSelectedChoiceId());

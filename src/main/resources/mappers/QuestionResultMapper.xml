@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dev.ian.duit.domain.question.components.QuestionQueryMapper">
+  
+  <resultMap id="mcqMap" type="Mcq">
+    <id           property="id"       column="id"         javaType="Long" />
+    <result       property="topic"    column="topic"      javaType="String" />
+    <result       property="question" column="question"   javaType="String" />
+    <collection   property="choices"  ofType="McqChoice"  javaType="set"
+                  resultMap="choiceMap" columnPrefix="c_"/>
+  </resultMap>
+
+  <resultMap id="choiceMap" type="McqChoice">
+    <id property="id" column="id" javaType="Long"/>
+    <result property="choice" column="choice" javaType="String"/>
+    <result property="explanation" column="explanation" javaType="String"/>
+    <result property="isCorrect" column="is_correct" javaType="String"/>
+  </resultMap>
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dev.ian.duit.domain.quiz.components.QuizQueryMapper">
+
+  <resultMap id="quizMap" type="dev.ian.duit.domain.quiz.core.QuizResult">
+    <id           property="id"         column="id"             javaType="Long"/>
+    <result       property="dateTaken"  column="date_taken"     javaType="LocalDateTime" />
+    <result       property="timeTaken"  column="time_taken"     javaType="Long"/>
+    <result       property="topic"      column="topic"          javaType="String"/>
+    <result       property="totalItems" column="total_items"    javaType="Long"/>
+    <result       property="score"      column="score"  javaType="Long"/>
+    <collection   property="results"    resultMap="quizResultMap" 
+                  columnPrefix="res_" />
+  </resultMap>
+
+  <resultMap type="QuizItemResult" id="quizResultMap">
+    <id           property="id"         column="id"             javaType="Long" />
+    <association  property="mcq"            
+                  resultMap="dev.ian.duit.domain.question.components.QuestionQueryMapper.mcqMap" 
+                  columnPrefix="mc_"/>
+    <association  property="selectedChoice" 
+                  resultMap="dev.ian.duit.domain.question.components.QuestionQueryMapper.choiceMap" 
+                  columnPrefix="mcs_"/>
+  </resultMap>
+
+</mapper>

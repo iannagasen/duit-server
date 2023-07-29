@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Options;
 
 import dev.ian.duit.domain.quiz.core.QuizItemResult;
 import dev.ian.duit.domain.quiz.core.QuizResult;
+import dev.ian.duit.domain.quiz.dto.PostQuizItemDTO;
 
 @Mapper
 public interface QuizCommandMapper {
@@ -33,5 +34,5 @@ public interface QuizCommandMapper {
     )    
   """)
   @Options(useGeneratedKeys=true, keyColumn="id", keyProperty="item.id")
-  int createQuizItem(Long quizId, QuizItemResult item);
+  int createQuizItem(Long quizId, PostQuizItemDTO item);
 }

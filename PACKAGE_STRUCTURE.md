@@ -26,6 +26,9 @@
       - dto
         - UpdateMcqRequest
         - McqChoiceDTO
+        - PostQuestionRequest
+        - PostQuestionChoiceDTO
+        - QuestionQueryResponse
       - core
         - Mcq
         - McqChoice

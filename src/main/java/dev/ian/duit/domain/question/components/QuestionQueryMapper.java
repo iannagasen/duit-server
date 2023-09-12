@@ -13,12 +13,12 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
 import dev.ian.duit.domain.question.core.Mcq;
+import dev.ian.duit.domain.question.core.McqAnalytics;
 import dev.ian.duit.domain.question.core.McqChoice;
 
 @Mapper
 public interface QuestionQueryMapper {
-
-
+  
   @Select("""
     select 
         m.id          as id,
@@ -65,5 +65,40 @@ public interface QuestionQueryMapper {
   @ResultMap("mcqMap")
   @MapKey("topic")
   Map<String, List<Mcq>> getMcqToTopic();
+
+
+  @Select("""
+      with question_stat as (
+        select qzi.mcq_id
+             , count(1) as times_taken
+             , count(if(mc.is_correct = 'Y', 1, NULL)) times_correct 
+          from mcq_quiz_item qzi
+          left join mcq_choices mc on mc.id = qzi.choice_id
+         group by qzi.mcq_id
+      ), choice_stat as (
+        select m.id mcq_id
+             , mc.id choice_id
+             , mc.is_correct
+             , count(1) times_chosen
+          from mcq m
+          join mcq_choices mc on mc.mcq_id = m.id
+          join mcq_quiz_item qzi on qzi.choice_id = mc.id
+           and qzi.mcq_id = m.id
+         group by m.id
+             , mc.id
+             , mc.is_correct
+      )
+      select qs.mcq_id
+           , qs.times_taken
+           , qs.times_correct
+           , cs.choice_id       as c_choice_id
+           , cs.times_chosen    as c_times_chosen
+           , cs.is_correct      as c_is_correct
+        from question_stat qs
+        left join choice_stat cs on qs.mcq_id = cs.mcq_id
+       where qs.mcq_id = #{mcqId}
+  """)
+  @ResultMap("mcqAnalyticsMap")
+  McqAnalytics getMcqAnalytics(Long mcqId);
   
 }

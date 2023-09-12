@@ -30,5 +30,9 @@ public class QuizController {
   public List<QuizResult> getQuizAnalytics(@PathVariable String topic) {
     return quizQueryService.getQuizResults(topic);
   }
-  
+
+  @GetMapping("/{topic}/statistics")
+  public List<QuizResult> getQuizStatistics(@PathVariable String topic) {
+    return quizQueryService.getQuizResults(topic);
+  }
 }

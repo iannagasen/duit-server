@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import dev.ian.duit.domain.question.core.Mcq;
+import dev.ian.duit.domain.question.core.McqAnalytics;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -22,5 +23,9 @@ public class QuestionQueryService {
     return queryMapper.findAllMcq()
         .stream()
         .collect(Collectors.groupingBy(Mcq::getTopic));
+  }
+
+  public McqAnalytics getQuestionAnalytics(Long id) {
+    return queryMapper.getMcqAnalytics(id);
   }
 }

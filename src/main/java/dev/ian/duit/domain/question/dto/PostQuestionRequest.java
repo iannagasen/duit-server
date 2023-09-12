@@ -4,8 +4,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import dev.ian.duit.domain.question.core.Mcq;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
-
+@Builder
+@Getter
+@Setter
 public class PostQuestionRequest {
   private String topic;
   private String question;

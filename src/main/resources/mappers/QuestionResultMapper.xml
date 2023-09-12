@@ -13,9 +13,23 @@
   </resultMap>
 
   <resultMap id="choiceMap" type="McqChoice">
-    <id property="id" column="id" javaType="Long"/>
-    <result property="choice" column="choice" javaType="String"/>
-    <result property="explanation" column="explanation" javaType="String"/>
-    <result property="isCorrect" column="is_correct" javaType="String"/>
+    <id           property="id"         column="id"           javaType="Long"/>
+    <result       property="choice"     column="choice"       javaType="String"/>
+    <result       property="explanation" column="explanation" javaType="String"/>
+    <result       property="isCorrect"  column="is_correct"   javaType="String"/>
+  </resultMap>
+
+  <resultMap id="mcqAnalyticsMap" type="McqAnalytics">
+    <id           property="mcqId"            column="mcq_id"           javaType="Long"/>
+    <result       property="timesTaken"       column="times_taken"  javaType="Long" />
+    <result       property="timesCorrect"     column="times_correct" javaType="Long"/>
+    <collection   property="choiceAnalytics"  
+                  resultMap="choiceAnalyticsMap" columnPrefix="c_"/>    
+  </resultMap>
+
+  <resultMap id="choiceAnalyticsMap" type="McqChoiceAnalytics">
+    <id           property="choiceId"     column="choice_id"    javaType="Long" />
+    <result       property="timesChosen"  column="times_chosen" javaType="Long"/>
+    <result       property="correct"      column="is_correct"   javaType="boolean" />
   </resultMap>
 </mapper>

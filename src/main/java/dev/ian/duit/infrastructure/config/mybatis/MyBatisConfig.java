@@ -14,7 +14,9 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import dev.ian.duit.domain.question.core.Mcq;
+import dev.ian.duit.domain.question.core.McqAnalytics;
 import dev.ian.duit.domain.question.core.McqChoice;
+import dev.ian.duit.domain.question.core.McqChoiceAnalytics;
 import dev.ian.duit.domain.quiz.core.QuizItemResult;
 
 
@@ -59,7 +61,9 @@ public class MyBatisConfig {
           // owned classes
           QuizItemResult.class,
           Mcq.class,
-          McqChoice.class
+          McqChoice.class,
+          McqAnalytics.class,
+          McqChoiceAnalytics.class
       );
 
       return sessionFactory.getObject();
